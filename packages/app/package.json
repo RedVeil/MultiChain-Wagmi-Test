@@ -6,7 +6,7 @@
     "pnpm": "7"
   },
   "scripts": {
-    "dev": "next dev & graphql-codegen --watch",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
@@ -28,7 +28,8 @@
     "react-toastify": "^9.0.4",
     "urql": "^2.0.6",
     "wagmi": "0.5.5",
-    "zustand": "^3.6.7"
+    "zustand": "^3.6.7",
+    "find-config": "^1.0.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.3.1",

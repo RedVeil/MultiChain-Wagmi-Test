@@ -8,8 +8,7 @@ import {
   defaultChains,
   WagmiConfig,
 } from "wagmi";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 
 // Will default to goerli if nothing set in the ENV
 export const targetChainId =
@@ -22,10 +21,16 @@ const targetChains = defaultChains.filter(
 );
 
 export const { chains, provider, webSocketProvider } = configureChains(
-  targetChains,
+  [chain.mainnet, chain.polygon],
   [
-    alchemyProvider({ alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
-    publicProvider(),
+    jsonRpcProvider({
+      rpc: (chainId) => ({
+        http:
+          chainId === chain.mainnet
+            ? `https://mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}`
+            : `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
+      }),
+    }),
   ]
 );
 
@@ -35,8 +40,7 @@ const { connectors } = getDefaultWallets({
 });
 
 export const wagmiClient = createClient({
-  autoConnect: true,
-  connectors,
+  autoConnect: false,
   provider,
   webSocketProvider,
 });
