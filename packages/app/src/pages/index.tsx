@@ -5,6 +5,11 @@ import { useContractRead } from "wagmi";
 import IERC20abi from "../../../contracts/out/IERC20.sol/IERC20.abi.json";
 import { useIsMounted } from "../useIsMounted";
 
+enum BatchType {
+  Mint,
+  Redeem,
+}
+
 const HomePage: NextPage = () => {
   const {
     data: mainnetData,
@@ -32,6 +37,8 @@ const HomePage: NextPage = () => {
     //@ts-ignore
     notation: "compact",
   });
+
+  console.log(BatchType[BatchType.Mint]);
 
   return (
     <div className="min-h-screen flex flex-col">
